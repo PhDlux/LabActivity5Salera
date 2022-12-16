@@ -52,16 +52,27 @@ public class SimpleCalcGUI extends JFrame {
     }
 
     void compute() {
-        double num1 = Double.parseDouble(tfNumber1.getText());
-        double num2 = Double.parseDouble(tfNumber2.getText());
-        if(cbOperations.getSelectedItem() == "+") {
-            lblResult.setText(String.format("%.1f", num1+num2));
-        } else if(cbOperations.getSelectedItem() == "-") {
-            lblResult.setText(String.format("%.1f", num1-num2));
-        } else if(cbOperations.getSelectedItem() == "*") {
-            lblResult.setText(String.format("%.1f", num1*num2));
-        } else {
-            lblResult.setText(String.format("%.1f", num1/num2));
+        try {
+            double num1 = Double.parseDouble(tfNumber1.getText());
+            double num2 = Double.parseDouble(tfNumber2.getText());
+            if(cbOperations.getSelectedItem() == "+") {
+                lblResult.setText(String.format("%.1f", num1+num2));
+            } else if(cbOperations.getSelectedItem() == "-") {
+                lblResult.setText(String.format("%.1f", num1-num2));
+            } else if(cbOperations.getSelectedItem() == "*") {
+                lblResult.setText(String.format("%.1f", num1*num2));
+            } else {
+                if(num2 == 0) {
+                    lblResult.setText("undefined");
+                    throw new ArithmeticException("Cannot divide by zero!");
+                } else {
+                    lblResult.setText(String.format("%.1f", num1/num2));
+                }
+            }
+        } catch(ArithmeticException a) {
+            JOptionPane.showMessageDialog(pnlMain, a.getMessage());
+        } catch(NumberFormatException n) {
+            JOptionPane.showMessageDialog(pnlMain, "Input must be a valid number!");
         }
     }
 }
