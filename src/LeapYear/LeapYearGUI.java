@@ -1,7 +1,5 @@
 package LeapYear;
 
-import com.sun.nio.sctp.PeerAddressChangeNotification;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -51,17 +49,24 @@ public class LeapYearGUI extends JFrame {
     }
 
     void isLeapYear() {
-        int year = Integer.parseInt(tfYear.getText());
-        if(year % 100 == 0) {
-            if(year % 400 == 0) {
+        try {
+            int year = Integer.parseInt(tfYear.getText());
+            if(year % 100 == 0) {
+                if(year % 400 == 0) {
+                    JOptionPane.showMessageDialog(pnlMain, "Leap year");
+                } else {
+                    JOptionPane.showMessageDialog(pnlMain, "Not a leap year");
+                }
+            } else if(year % 4 == 0) {
                 JOptionPane.showMessageDialog(pnlMain, "Leap year");
             } else {
                 JOptionPane.showMessageDialog(pnlMain, "Not a leap year");
             }
-        } else if(year % 4 == 0) {
-            JOptionPane.showMessageDialog(pnlMain, "Leap year");
-        } else {
-            JOptionPane.showMessageDialog(pnlMain, "Not a leap year");
+        } catch(NumberFormatException n) {
+            JOptionPane.showMessageDialog(pnlMain, "Input is must be a year!");
+        } finally {
+            tfYear.setText("");
         }
+
     }
 }
